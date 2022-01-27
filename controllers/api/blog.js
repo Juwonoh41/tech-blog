@@ -1,46 +1,46 @@
 const router = require('express').Router();
-const { Post } = require('../../models');
+const { Blog } = require('../../models');
 
-router.post('/createPost', async (req,res)=> { 
+router.post('/createblog', async (req,res)=> { 
   try { 
       
-    let newPost = { 
+    let newBlog = { 
       ...req.body, 
       blogger_id: req.session.user_id
     }
 
-    let newPostData = await Blog.create(newPost)
-      res.json({ newPostData, message: 'Post Created!' });
+    let newBlogData = await Blog.create(newBlog)
+      res.json({ newBlogData, message: 'Blog Created!' });
 
 } catch (err) {
   res.status(400).json(err);
 }
 })
 
-router.delete('/deletePost', async (req,res)=>{
-    await Post.destroy({
+router.delete('/deleteblog', async (req,res)=>{
+    await Blog.destroy({
       where:{
-        id: req.body.postId,
+        id: req.body.blogId,
       }
     })
     res.json({message:"Deleted"})
 })
 
-router.get('/getpost/:id', async (req,res)=>{
-  let blogData= await Post.findByPk(req.params.id)
+router.get('/getblog/:id', async (req,res)=>{
+  let blogData= await Blog.findByPk(req.params.id)
   res.json(await blogData.get({plain:true}))
 })
 
-router.put('/editPost', async (req,res)=> { 
+router.put('/editblog', async (req,res)=> { 
   try { 
 
-    let updatePost = await Post.update({
+    let updatedBlog = await Blog.update({
       title:req.body.title, 
       content: req.body.content
     }, {where:{id:req.body.id}})
 
 
-      res.json({ newPostData: updatePost, message: 'Post Created!' });
+      res.json({ newBlogData: updatedBlog, message: 'Blog Created!' });
 
 } catch (err) {
   res.status(400).json(err);

@@ -2,8 +2,8 @@ console.log("on posting JS")
 
 const form = document.querySelector("#postblog")
 
-const deleteBtn = document.querySelectorAll(".deleteBtn")
-const editBtn = document.querySelectorAll(".editBtn")
+const deleteBtns = document.querySelectorAll(".deleteBtn")
+const editBtns = document.querySelectorAll(".editBtn")
 
 form.addEventListener("submit", (e)=> { 
   e.preventDefault();
@@ -12,12 +12,12 @@ form.addEventListener("submit", (e)=> {
 
   if(!title  || !content) return ;
   
-  let editId =form.getAttribute("data-id")
-  if(editId){
+  let blogEditId =form.getAttribute("data-id")
+  if(blogEditId){
 
     fetch('/api/blog/editblog',{
       method:'PUT',
-      body: JSON.stringify({title,content, id:editId}),
+      body: JSON.stringify({title,content, id:blogEditId}),
       headers: { 'Content-Type': 'application/json' },
     }).then((res)=>res.json())
     .then((data)=>{
@@ -38,7 +38,7 @@ form.addEventListener("submit", (e)=> {
   form[1].value = ""
 })
 
-deleteBtn.forEach(btn => btn.addEventListener('click', (e)=> {
+deleteBtns.forEach(btn => btn.addEventListener('click', (e)=> {
   let el = e.target.getAttribute("data-item")
 
   fetch('/api/blog/deleteblog',{
@@ -51,7 +51,7 @@ deleteBtn.forEach(btn => btn.addEventListener('click', (e)=> {
 })
 }));
 
-editBtn.forEach(btn => btn.addEventListener('click', (e)=> {
+editBtns.forEach(btn => btn.addEventListener('click', (e)=> {
   let id = e.target.getAttribute("data-item")
 
   fetch(`/api/blog/getblog/${id}`).then((res)=>res.json())

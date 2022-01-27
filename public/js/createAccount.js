@@ -9,7 +9,7 @@ form.addEventListener("submit", (e)=> {
 
   if(!email  || !password || !name) return ;
 
-  let user = { 
+  let userObj = { 
     email ,
     name , 
     password
@@ -17,7 +17,7 @@ form.addEventListener("submit", (e)=> {
   
   fetch('/api/users/createuser',{
     method:'POST',
-    body: JSON.stringify(user),
+    body: JSON.stringify(userObj),
     headers: { 'Content-Type': 'application/json' },
   }).then((res)=>res.json())
   .then((data)=>{
